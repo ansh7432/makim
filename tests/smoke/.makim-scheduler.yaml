@@ -1,32 +1,14 @@
 groups:
-  default: 
+  test:
     tasks:
       test-echo:
         run: echo "Basic echo test successful"
-      test-date:
-        run: |
-          echo "Testing date command..."
-          date
-      test-sleep:
-        run: |
-          echo "Starting sleep test..."
-          sleep 2
-          echo "Sleep test complete"
-      test-all:
-        hooks:
-          pre-run:
-            - task: default.test-echo 
-            - task: default.test-date
-            - task: default.test-sleep
 
-  test: 
-    tasks:
-      test-echo:
-        run: echo "Basic echo test successful"
       test-date:
         run: |
           echo "Testing date command..."
           date
+
       test-sleep:
         run: |
           echo "Starting sleep test..."
@@ -35,19 +17,19 @@ groups:
       test-all:
         hooks:
           pre-run:
-            - task: test.test-echo
-            - task: test.test-date
-            - task: test.test-sleep
+            - task: test.test-echo  # fixed the group prefix in hooks
+            - task: test.test-date  
+            - task: test.test-sleep  
 
 scheduler:
   test_basic_echo:
     schedule: "*/5 * * * *"
-    task: default.test-echo
+    task: test.test-echo
 
   test_date_command:
     schedule: "*/10 * * * *"
-    task: default.test-date
+    task: test.test-date
 
   test_sleep_function:
     schedule: "*/15 * * * *"
-    task: default.test-sleep
+    task: test.test-sleep
